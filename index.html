@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense &amp; Budget Visualizer</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+
+    <!-- ===== HEADER: Balance + Theme Toggle ===== -->
+    <header class="app-header">
+      <div class="balance-display">
+        <span class="balance-label">Total Balance:</span>
+        <span id="balance-amount">0.00</span>
+      </div>
+      <button
+        id="theme-toggle"
+        type="button"
+        aria-label="Switch to dark mode"
+      >🌙 Dark Mode</button>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="app-main">
+
+      <!-- 1. Input Form Section -->
+      <section class="form-section" aria-labelledby="form-heading">
+        <h2 id="form-heading">Add Transaction</h2>
+        <form id="expense-form" novalidate>
+
+          <div class="field-group">
+            <label for="item-name">Item Name</label>
+            <input
+              type="text"
+              id="item-name"
+              name="item-name"
+              maxlength="100"
+              placeholder="e.g. Lunch, Bus fare…"
+              autocomplete="off"
+            />
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+
+          <div class="field-group">
+            <label for="amount">Amount</label>
+            <input
+              type="number"
+              id="amount"
+              name="amount"
+              min="0.01"
+              max="999999999.99"
+              step="0.01"
+              placeholder="0.00"
+            />
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+
+          <div class="field-group">
+            <label for="category">Category</label>
+            <select id="category" name="category">
+              <option value="" disabled selected>— Select a category —</option>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Fun">Fun</option>
+            </select>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+
+          <div class="field-group">
+            <label for="custom-category">Custom Category <span class="optional">(optional)</span></label>
+            <input
+              type="text"
+              id="custom-category"
+              name="custom-category"
+              maxlength="30"
+              placeholder="Enter a new category name"
+              autocomplete="off"
+            />
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+
+          <button type="submit" class="btn-primary">Add Transaction</button>
+        </form>
+      </section>
+
+      <!-- 2. Transaction List Section -->
+      <section id="transaction-section" aria-labelledby="transactions-heading">
+        <h2 id="transactions-heading">Transactions</h2>
+
+        <!-- Sort controls -->
+        <div class="sort-controls" role="group" aria-label="Sort transactions">
+          <button type="button" class="sort-btn" data-sort="amount" data-dir="asc">Amount ↑</button>
+          <button type="button" class="sort-btn" data-sort="amount" data-dir="desc">Amount ↓</button>
+          <button type="button" class="sort-btn" data-sort="category" data-dir="asc">Category A–Z</button>
+          <button type="button" class="sort-btn" data-sort="category" data-dir="desc">Category Z–A</button>
+        </div>
+
+        <ul id="transaction-list" aria-label="Transaction list">
+          <!-- Populated by js/app.js -->
+        </ul>
+      </section>
+
+      <!-- 3. Chart Section -->
+      <section class="chart-section" aria-labelledby="chart-heading">
+        <h2 id="chart-heading">Spending Distribution</h2>
+
+        <div id="chart-placeholder" role="status" aria-live="polite">
+          <p>No spending data yet. Add a transaction to see the chart.</p>
+        </div>
+
+        <canvas id="spending-chart" aria-label="Spending distribution pie chart" role="img"></canvas>
+
+        <div id="chart-legend" aria-label="Chart legend">
+          <!-- Populated by js/app.js -->
+        </div>
+      </section>
+
+      <!-- 4. Spending Limits Section -->
+      <section id="limits-section" aria-labelledby="limits-heading">
+        <h2 id="limits-heading">Spending Limits</h2>
+        <!-- Populated by js/app.js -->
+      </section>
+
+    </main>
+
+    <!-- ===== TOAST NOTIFICATION ===== -->
+    <div id="toast" role="alert" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Chart.js 4 UMD bundle (must come before app.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Application logic -->
+    <script src="js/app.js" defer></script>
+  </body>
+</html>
